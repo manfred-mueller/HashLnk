@@ -14,11 +14,11 @@ namespace MenuWinX
     public class HashLnk
     {
         /*
-         * 作者：坑晨
-         * 适用范围：Windows8 +
+         * Author: Keng Chen
+         * Scope of application: Windows8 +
          * Website：http://www.pcmoe.net/forum.php
          * 
-         * 作者：riverar
+         * Author：riverar
          * WinX Menu Hashing Algorithm：https://www.withinrafael.com/2014/04/05/the-winx-menu-and-its-hashing-algorithm/
          * PropertyStoreDataBlock：https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/36463387-0708-40f6-a3a5-452fe42be585
          */
@@ -32,7 +32,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 快速批量添加 Hashing
+        /// Quick add Hashing
         /// </summary>
         public HashLnk(string[] lnkFiles)
         {
@@ -43,7 +43,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 快速批量添加 Hashing
+        /// Quick batch add Hashing
         /// </summary>
         public HashLnk(List<string> lnkFiles)
         {
@@ -54,7 +54,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 创建快捷方式并添加 Hashing
+        /// Create a shortcut and add Hashing
         /// </summary>
         public static void CreateLnk(int group, string displayName, string exePath, string workingDir, bool elevated, string arguments)
         {
@@ -76,7 +76,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 检查快捷方式文件格式
+        /// Check the shortcut file format
         /// </summary>
         public static bool IsNoLnkFile(string lnkFile)
         {
@@ -85,7 +85,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 添加 Hashing
+        /// Add to Hashing
         /// </summary>
         public static bool PropertyStoreDataBlock(string lnkFile)
         {
@@ -94,12 +94,12 @@ namespace MenuWinX
 
             foreach (var kv in SystemFolderMapping)
             {
-                //执行快捷方式映射操作
+                //Perform shortcut mapping operations
                 property = property.ToLower().Replace(kv.Key, kv.Value);
             }
 
             if (lnk.Arguments.Length > 0) { property += lnk.Arguments; }
-            property += "do not prehash links.  this should only be done by the user."; //特殊但必须存在的字符串
+            property += "do not prehash links.  this should only be done by the user."; //special but must exist string
             property = property.ToLower();
 
             byte[] inBytes = Encoding.GetEncoding(1200).GetBytes(property);
@@ -107,7 +107,7 @@ namespace MenuWinX
             byte[] outBytes = new byte[byteCount];
 
             int hashResult = HashData(inBytes, byteCount, outBytes, byteCount);
-            if (hashResult != 0) { return false; } //输出错误 Marshal.GetLastWin32Error()
+            if (hashResult != 0) { return false; } //output error Marshal.GetLastWin32Error()
 
             using (var propertyWriter = ShellFile.FromFilePath(lnkFile).Properties.GetPropertyWriter())
             {
@@ -120,7 +120,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 获取 Group 文件夹数目
+        /// Get the number of Group folders
         /// </summary>
         public static int GetNextMaxGroup()
         {
@@ -139,7 +139,7 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 转换环境变量为绝对路径
+        /// Convert environment variables to absolute paths
         /// </summary>
         private static string ExpandEnvVar(string withVars)
         {
@@ -157,12 +157,12 @@ namespace MenuWinX
         }
 
         /// <summary>
-        /// 快捷方式提权操作
+        /// Shortcut Privilege Escalation
         /// </summary>
         private static void ElevateLnk(string lnkFile)
         {
             /*
-             * 作者：Henrik Rading
+             * Author：Henrik Rading
              * Blog：https://blog.ctglobalservices.com/powershell/hra/create-shortcut-with-elevated-rights/
              */
 
