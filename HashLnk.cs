@@ -24,7 +24,7 @@ namespace MenuWinX
          */
 
         /// <summary>
-        /// 快速添加 Hashing
+        /// Quick add Hashing
         /// </summary>
         public HashLnk(string lnkFile)
         {
